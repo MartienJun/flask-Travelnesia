@@ -1,0 +1,47 @@
+{% extends "base/nav_user.html" %}
+
+{% block title %}Role{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1>Tabel Role</h1>
+    </div>
+    <div class="container my-5">
+        <a href="insert">
+            <button type="submit" class="btn btn-primary mb-3">Add</button>
+        </a>
+        {% if list_role | length < 1 %}
+            <p>Tabel role Kosong!</p>
+        {% else %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Role id</th>
+                    <th>Role name</th>
+
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for role in list_role %}
+                <tr>
+                    <td>{{ role.role_id }}</td>
+                    <td>{{ role.role_name }}</td>
+
+                    <td>
+                        <a href="{{ 'update/' + role.role_id }}">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </a>
+                        <form action="{{ 'delete/' + role.role_id }}" method="post">
+                            <div class="form-group mt-1">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

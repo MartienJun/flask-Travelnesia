@@ -1,0 +1,63 @@
+{% extends "base/nav_user.html" %}
+
+{% block title %}Post{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1>Post - Edit {{ post.post_id }}</h1>
+    </div>
+    <div class="container my-5">
+
+        {% if list_user | length < 1 %}
+            <p>Tabel user Kosong! Tambah user terlebih dahulu!</p>
+        {% else %}
+            <form method="post">
+                <div class="form-group mt-3">
+                    <h5>Post id</h5>
+                    <input type="text" name="post_id" class="form-control" value="{{ post.post_id }}" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Title</h5>
+                    <input type="text" name="title" class="form-control" value="{{ post.title }}" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>User</h5>
+                    <select name="username" required>
+                        {% for user in list_user %}
+                            <option value="{{ user.username }}" {% if post.username == user.username %}selected{% endif %}>{{ user.role }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Location</h5>
+                    <input type="text" name="location" class="form-control" value="{{ post.location }}" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Location rating</h5>
+                    <input type="text" name="location_rating" class="form-control" value="{{ post.location_rating }}" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Vote</h5>
+                    <input type="text" name="vote" class="form-control" value="{{ post.vote }}" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Budget</h5>
+                    <input type="text" name="budget" class="form-control" value="{{ post.budget }}" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Content</h5>
+                    <input type="text" name="content" class="form-control" value="{{ post.content }}" required>
+                </div>
+
+                {% if message %}
+                    <div class="conatiner mt-3 text-danger">
+                        <h5>{{ message }}</h5>
+                    </div>
+                {% endif %}
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

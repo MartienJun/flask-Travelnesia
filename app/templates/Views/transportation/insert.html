@@ -1,0 +1,36 @@
+{% extends "base/nav_user.html" %}
+
+{% block title %}Transportation{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1>Transportation - Add</h1>
+    </div>
+    <div class="container my-5">
+
+            <form method="post">
+                <div class="form-group mt-3">
+                    <h5>Transport id</h5>
+                    <input type="text" name="transport_id" class="form-control" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Transport</h5>
+                    <input type="text" name="transport" class="form-control" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Type</h5>
+                    <input type="text" name="type" class="form-control" required>
+                </div>
+
+                {% if message %}
+                    <div class="conatiner mt-3 text-danger">
+                        <h5>{{ message }}</h5>
+                    </div>
+                {% endif %}
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+    </div>
+{% endblock %}

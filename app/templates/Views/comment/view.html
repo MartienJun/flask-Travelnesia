@@ -1,0 +1,61 @@
+{% extends "base/nav_user.html" %}
+
+{% block title %}Comment{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1>Tabel Comment</h1>
+    </div>
+    <div class="container my-5">
+        <a href="insert">
+            <button type="submit" class="btn btn-primary mb-3">Add</button>
+        </a>
+        {% if list_comment | length < 1 %}
+            <p>Tabel comment Kosong!</p>
+        {% else %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Comment id</th>
+                    <th>Post</th>
+                    <th>User</th>
+                    <th>Content</th>
+                    <th>Vote</th>
+
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in list_comment %}
+                <tr>
+                    <td>{{ comment.comment_id }}</td>
+                    {% for post in list_post %}
+                        {% if comment.post_id == post.post_id %}
+                            <td>{{ post.title }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    {% for user in list_user %}
+                        {% if comment.username == user.username %}
+                            <td>{{ user.role }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td>{{ comment.content }}</td>
+                    <td>{{ comment.vote }}</td>
+
+                    <td>
+                        <a href="{{ 'update/' + comment.comment_id }}">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </a>
+                        <form action="{{ 'delete/' + comment.comment_id }}" method="post">
+                            <div class="form-group mt-1">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

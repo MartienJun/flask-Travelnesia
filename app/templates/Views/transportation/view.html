@@ -1,0 +1,49 @@
+{% extends "base/nav_user.html" %}
+
+{% block title %}Transportation{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1>Tabel Transportation</h1>
+    </div>
+    <div class="container my-5">
+        <a href="insert">
+            <button type="submit" class="btn btn-primary mb-3">Add</button>
+        </a>
+        {% if list_transportation | length < 1 %}
+            <p>Tabel transportation Kosong!</p>
+        {% else %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Transport id</th>
+                    <th>Transport</th>
+                    <th>Type</th>
+
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for transportation in list_transportation %}
+                <tr>
+                    <td>{{ transportation.transport_id }}</td>
+                    <td>{{ transportation.transport }}</td>
+                    <td>{{ transportation.type }}</td>
+
+                    <td>
+                        <a href="{{ 'update/' + transportation.transport_id }}">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </a>
+                        <form action="{{ 'delete/' + transportation.transport_id }}" method="post">
+                            <div class="form-group mt-1">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
