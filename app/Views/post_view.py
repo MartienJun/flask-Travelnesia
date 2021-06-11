@@ -55,7 +55,7 @@ def update(id):
         return redirect(url_for('home'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("Views/post/update.html", post=PostController.get_by_id(id), list_user=UserController.get_all())
+        return render_template("admin/post/update.html", post=PostController.get_by_id(id), list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     post_id = request.form['post_id']
