@@ -1,0 +1,97 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}View Post{% endblock %}
+
+{% block nav_post %}active{% endblock nav_post %}
+
+{% block content %}
+<div class="container-fluid">
+    {% if list_post | length < 1 %}
+    <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
+        <p class="h1 font-weight-bold">No Post Created</p>
+    </div>
+    {% else %}
+    <div class="row">
+        {% for post in list_post %}
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-column justify-content-center">
+                    <div class="mb-2 d-flex flex-row align-items-center justify-content-between">
+                        <p class="h4 m-0 font-weight-bold text-success">{{ post.title }}</p>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Edit :</div>
+                                <a class="dropdown-item" href="{{ 'update/' + post.post_id }}">Update</a>
+                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#deletePostModal{{ post.post_id }}">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% for user in list_user %}
+                        {% if post.username == user.username %}
+                            <p class="h6">Posted by {{ user.username }}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <p class="h6">Vote {{ post.vote }}</p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Location -->
+                        <div class="col-1">
+                            <p>Location</p>
+                        </div>
+                        <div class="col-11 font-weight-bold">
+                            <p>{{ post.location }}</p>
+                        </div>
+                        <!-- Rating -->
+                        <div class="col-1">
+                            <p>Rating</p>
+                        </div>
+                        <div class="col-11 text-warning">
+                            {% for user in range(post.location_rating) %}
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            {% endfor %}
+                        </div>
+                        <!-- Budget -->
+                        <div class="col-1">
+                            <p>Budget</p>
+                        </div>
+                        <div class="col-11 font-weight-bold">
+                            <p>Rp {{ post.budget }},00</p>
+                        </div>
+                        <!-- Story -->
+                        <div class="col-12">
+                            <p class="m-0 text-wrap">{{ post.content }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deletePostModal{{ post.post_id }}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" me>
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p class="h2 text-center mb-4">Delete this post?</p>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <div class="mx-2"></div>
+                            <form method="post">
+                                <a class="btn btn-danger" type="submit" href="{{ 'delete/' + post.post_id }}">Delete</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Delete Modal -->
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

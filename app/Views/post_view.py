@@ -16,7 +16,7 @@ def view():
     if session.get('admin') is None:
         return redirect(url_for('home'))
     # Jika session admin ada, tampilkan halaman view
-    return render_template("Views/post/view.html", list_post=PostController.get_all(), list_user=UserController.get_all())
+    return render_template("admin/post/view_post.html", list_post=PostController.get_all(), list_user=UserController.get_all())
 
 
 # Routing untuk halaman insert
