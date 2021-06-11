@@ -12,7 +12,7 @@
             <input class="form-control mr-sm-2" type="text" placeholder="Search Title">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
-        <a class="btn btn-success btn-icon-split" href="">
+        <a class="btn btn-success btn-icon-split" href="{{ url_for('post.insert') }}">
             <span class="icon text-white-50"><i class="fa fa-plus" aria-hidden="true"></i></span>
             <span class="text">Add Post</span>
         </a>
@@ -37,7 +37,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header">Edit :</div>
-                                <a class="dropdown-item" href="{{ 'update/' + post.post_id }}">Update</a>
+                                <a class="dropdown-item" href="{{ url_for('post.update', id=post.post_id) }}">Update</a>
                                 <a class="dropdown-item" href="" data-toggle="modal" data-target="#deletePostModal{{ post.post_id }}">Delete</a>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                             <div class="mx-2"></div>
                             <form method="post">
-                                <a class="btn btn-danger" type="submit" href="{{ 'delete/' + post.post_id }}">Delete</a>
+                                <a class="btn btn-danger" type="submit" href="{{ url_for('post.delete', id=post.post_id) }}">Delete</a>
                             </form>
                         </div>
                     </div>
