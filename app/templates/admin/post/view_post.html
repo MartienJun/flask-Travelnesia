@@ -6,9 +6,21 @@
 
 {% block content %}
 <div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Post</h1>
+        <form class="form-inline" action="">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search Title">
+            <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        <a class="btn btn-success btn-icon-split" href="">
+            <span class="icon text-white-50"><i class="fa fa-plus" aria-hidden="true"></i></span>
+            <span class="text">Add Post</span>
+        </a>
+    </div>
+
     {% if list_post | length < 1 %}
     <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
-        <p class="h1 font-weight-bold">No Post Created</p>
+        <p class="h1 mb-4 font-weight-bold">No Post Created</p>
     </div>
     {% else %}
     <div class="row">
