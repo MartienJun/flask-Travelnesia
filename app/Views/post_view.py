@@ -27,10 +27,10 @@ def insert():
         return redirect(url_for('home'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
-        return render_template("Views/post/insert.html", list_user=UserController.get_all())
+        return render_template("admin/post/insert.html", list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
-    post_id = request.form['post_id']
+    post_id = None
     title = request.form['title']
     username = request.form['username']
     location = request.form['location']
@@ -38,11 +38,6 @@ def insert():
     vote = request.form['vote']
     budget = request.form['budget']
     content = request.form['content']
-
-    # Cek apakah post_id sudah ada dalam database
-    if PostController.get_by_id(post_id) is not None:
-        # jika iya, tampilkan error message
-        return render_template('Views/post/insert.html', message="post_id sudah pernah terdaftar!", list_user=UserController.get_all())
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     post = Post(post_id, title, username, location, location_rating, vote, budget, content)
