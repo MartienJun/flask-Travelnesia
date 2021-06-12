@@ -54,7 +54,7 @@ def update(id):
         return redirect(url_for('home'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("Views/transportation/update.html", transportation=TransportationController.get_by_id(id))
+        return render_template("admin/transportation/update.html", transportation=TransportationController.get_by_id(id))
 
     # Jika metodenya adalah post, dapatkan data dari post
     transport_id = request.form['transport_id']
