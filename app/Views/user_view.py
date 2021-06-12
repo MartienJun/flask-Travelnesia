@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from app.Controllers.user_controller import UserController
 from app.Models.user import User
 from app.Controllers.role_controller import RoleController
+from app.Controllers.profile_controller import ProfileController
 
 
 # Insialisasi Blueprint dengan url_prefix user
@@ -16,7 +17,7 @@ def view():
     if session.get('admin') is None:
         return redirect(url_for('home'))
     # Jika session admin ada, tampilkan halaman view
-    return render_template("Views/user/view.html", list_user=UserController.get_all(), list_role=RoleController.get_all())
+    return render_template("admin/user/view.html", list_user=UserController.get_all(), list_role=RoleController.get_all(), list_profile=ProfileController.get_all())
 
 
 # Routing untuk halaman insert
@@ -27,7 +28,7 @@ def insert():
         return redirect(url_for('home'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
-        return render_template("Views/user/insert.html", list_role=RoleController.get_all())
+        return render_template("admin/user/insert.html", list_role=RoleController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     username = request.form['username']
@@ -37,7 +38,7 @@ def insert():
     # Cek apakah username sudah ada dalam database
     if UserController.get_by_id(username) is not None:
         # jika iya, tampilkan error message
-        return render_template('Views/user/insert.html', message="username sudah pernah terdaftar!", list_role=RoleController.get_all())
+        return render_template('admin/user/insert.html', message="username sudah pernah terdaftar!", list_role=RoleController.get_all())
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     user = User(username, role, password)
@@ -55,7 +56,7 @@ def update(id):
         return redirect(url_for('home'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("Views/user/update.html", user=UserController.get_by_id(id), list_role=RoleController.get_all())
+        return render_template("admin/user/update.html", user=UserController.get_by_id(id), list_role=RoleController.get_all(), list_profile=ProfileController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     username = request.form['username']
@@ -71,7 +72,7 @@ def update(id):
 
 
 # Routing untuk halaman delete
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete/<id>', methods=['GET', 'POST'])
 def delete(id):
     # Jika session admin tidak ada, redirect kembali ke home
     if session.get('admin') is None:
