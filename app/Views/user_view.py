@@ -39,15 +39,20 @@ def insert():
     role = request.form['role']
     password = request.form['password']
     profile_pict = request.files['profile_pict']
+    p_pict = profile_pict.filename
 
     # Cek apakah username sudah ada dalam database
     if UserController.get_by_id(username) is not None:
         # jika iya, tampilkan error message
         return render_template('admin/user/insert.html', message="username sudah pernah terdaftar!", list_role=RoleController.get_all())
 
+    # Jika profile picture tidak diisi
+    if p_pict == "":
+        p_pict = "default_profile.png"
+
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     user = User(username, role, password)
-    profile = Profile(username, name, email, telp, profile_pict.filename)
+    profile = Profile(username, name, email, telp, p_pict)
     UserController.insert(user)
     ProfileController.insert(profile)
 
@@ -63,7 +68,7 @@ def update(id):
         return redirect(url_for('home'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("admin/user/update.html", user=UserController.get_by_id(id), list_role=RoleController.get_all(), list_profile=ProfileController.get_all())
+        return render_template("admin/user/update.html", user=UserController.get_by_id(id), list_role=RoleController.get_all(), profile=ProfileController.get_by_id(id))
 
     # Jika metodenya adalah post, dapatkan data dari post
     username = request.form['username']
@@ -73,12 +78,17 @@ def update(id):
     role = request.form['role']
     password = request.form['password']
     profile_pict = request.files['profile_pict']
+    p_pict = profile_pict.filename
 
+    # Jika profile picture tidak diisi
+    if p_pict == "":
+        p_pict = ProfileController.get_by_id(id).profile_pict
+    
     # Update data tersebut ke dalam database melalui model
     user = User(username, role, password)
-    profile = Profile(username, name, email, telp, profile_pict.filename)
-    UserController.insert(user)
-    ProfileController.insert(profile)
+    profile = Profile(username, name, email, telp, p_pict)
+    UserController.update(user)
+    ProfileController.update(profile)
 
     # Redirect kembali ke view
     return redirect(url_for('user.view'))
