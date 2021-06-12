@@ -15,7 +15,7 @@ def view():
     if session.get('admin') is None:
         return redirect(url_for('home'))
     # Jika session admin ada, tampilkan halaman view
-    return render_template("Views/transportation/view.html", list_transportation=TransportationController.get_all())
+    return render_template("admin/transportation/view.html", list_transportation=TransportationController.get_all())
 
 
 # Routing untuk halaman insert
@@ -26,7 +26,7 @@ def insert():
         return redirect(url_for('home'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
-        return render_template("Views/transportation/insert.html")
+        return render_template("admin/transportation/insert.html")
 
     # Jika metodenya adalah post, dapatkan data dari post
     transport_id = request.form['transport_id']
@@ -36,7 +36,7 @@ def insert():
     # Cek apakah transport_id sudah ada dalam database
     if TransportationController.get_by_id(transport_id) is not None:
         # jika iya, tampilkan error message
-        return render_template('Views/transportation/insert.html', message="transport_id sudah pernah terdaftar!")
+        return render_template('admin/transportation/insert.html', message="transport_id sudah pernah terdaftar!")
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     transportation = Transportation(transport_id, transport, type)
