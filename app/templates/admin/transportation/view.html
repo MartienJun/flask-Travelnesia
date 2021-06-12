@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Transportation</h1>
+        <h1 class="h3 mb-0 text-gray-800">Transport</h1>
         <a class="btn btn-success btn-icon-split" href="{{ url_for('transportation.insert') }}">
             <span class="icon text-white-50"><i class="fa fa-plus" aria-hidden="true"></i></span>
             <span class="text">Add Transport</span>
@@ -21,7 +21,7 @@
     {% else %}
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-dark">Transportation List</h6>
+            <h6 class="m-0 font-weight-bold text-success">Transportation List</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -40,7 +40,7 @@
                             <td class="text-center">{{ transportation.transport_id }}</td>
                             <td class="text-center">{{ transportation.transport }}</td>
                             <td class="text-center">{{ transportation.type }}</td>
-                            <td class="d-flex justify-content-center">
+                            <td class="d-flex align-items-center justify-content-center">
                                 <a class="btn btn-warning btn-icon-split mx-2" href="{{ url_for('transportation.update', id=transportation.transport_id) }}">
                                     <span class="text">
                                         <i class="fa fa-wrench" aria-hidden="true"></i>
