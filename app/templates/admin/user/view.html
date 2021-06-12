@@ -56,7 +56,7 @@
 
                                     <td class="text-center">{{ user.password }}</td>
                                     <td class="text-center">
-                                        <img class="img-fluid rounded w-50" src="{{ url_for('static', filename='img/profile.profile_pict') }}" alt="{{ profile.profile_pict }}">
+                                        <img class="img-fluid rounded w-50" src="{{ url_for('static', filename='img/' + profile.profile_pict) }}" alt="{{ profile.profile_pict }}">
                                     </td>
                                 {% endif %}
                             {% endfor %}
