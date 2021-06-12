@@ -1,0 +1,77 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}User{% endblock %}
+
+{% block nav_user %}active{% endblock nav_user %}
+
+{% block content %}
+<div class="container-fluid">        
+    <div class="row">
+        {% if message %}
+        <div class="col-12">
+            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-3"></div>
+        <div class="col-6 align-self-center pt-2 pb-5 px-5">
+            <div class="d-sm-flex align-items-center justify-content-center mb-5">
+                <h1 class="h3 mb-0 font-weight-bold text-gray-800">Add User</h1>
+            </div>
+            <form class="" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="">Username</label>
+                    <input class="form-control" name="username" type="text" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="">Name</label>
+                    <input class="form-control" name="name" type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input class="form-control" name="email" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Phone</label>
+                    <input class="form-control" name="telp" type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Role</label>
+                    <select name="role" class="form-control" required>
+                        <option value="">...</option>
+                        {% for role in list_role %}
+                            <option value="{{ role.role_id }}">{{ role.role_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input class="form-control" name="password" type="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Profile Pict</label>
+                    <div class="custom-file">
+                        <input class="custom-file-input" id="customFile" name="profile_pict" type="file" >
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+
+                <button type="submit" value="create user" class="btn btn-success btn-user btn-block mt-5">
+                    Submit
+                </button>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+{% endblock %}

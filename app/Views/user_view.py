@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from app.Controllers.user_controller import UserController
 from app.Models.user import User
 from app.Controllers.role_controller import RoleController
+from app.Models.profile import Profile
 from app.Controllers.profile_controller import ProfileController
 
 
@@ -32,8 +33,12 @@ def insert():
 
     # Jika metodenya adalah post, dapatkan data dari post
     username = request.form['username']
+    name = request.form['name']
+    email = request.form['email']
+    telp = request.form['telp']
     role = request.form['role']
     password = request.form['password']
+    profile_pict = request.files['profile_pict']
 
     # Cek apakah username sudah ada dalam database
     if UserController.get_by_id(username) is not None:
@@ -42,7 +47,9 @@ def insert():
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     user = User(username, role, password)
+    profile = Profile(username, name, email, telp, profile_pict.filename)
     UserController.insert(user)
+    ProfileController.insert(profile)
 
     # Redirect ke halaman view
     return redirect(url_for('user.view'))
@@ -60,12 +67,18 @@ def update(id):
 
     # Jika metodenya adalah post, dapatkan data dari post
     username = request.form['username']
+    name = request.form['name']
+    email = request.form['email']
+    telp = request.form['telp']
     role = request.form['role']
     password = request.form['password']
+    profile_pict = request.files['profile_pict']
 
     # Update data tersebut ke dalam database melalui model
     user = User(username, role, password)
-    UserController.update(user)
+    profile = Profile(username, name, email, telp, profile_pict.filename)
+    UserController.insert(user)
+    ProfileController.insert(profile)
 
     # Redirect kembali ke view
     return redirect(url_for('user.view'))
