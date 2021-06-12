@@ -56,50 +56,52 @@
 
                                     <td class="text-center">{{ user.password }}</td>
                                     <td class="text-center">
-                                        <img class="img-fluid" src="{{ url_for('static', filename='img/profile.profile_pict') }}" alt="{{ profile.profile_pict }}">
+                                        <img class="img-fluid rounded w-50" src="{{ url_for('static', filename='img/profile.profile_pict') }}" alt="{{ profile.profile_pict }}">
                                     </td>
                                 {% endif %}
                             {% endfor %}
                             
-                            <td class="d-flex align-items-center justify-content-center">
-                                <a class="btn btn-warning btn-icon-split mx-2" href="{{ url_for('user.update', id=user.username) }}">
-                                    <span class="text">
-                                        <i class="fa fa-wrench" aria-hidden="true"></i>
-                                    </span>
-                                </a>
+                            <td class="">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <a class="btn btn-warning btn-icon-split mx-2" href="{{ url_for('user.update', id=user.username) }}">
+                                        <span class="text">
+                                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                                        </span>
+                                    </a>
+                                    <div class="m-2"></div>
+                                    <a class="btn btn-danger btn-icon-split mx-2" data-toggle="modal" data-target="#deleteUserModal{{ user.username }}">
+                                        <span class="text">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>
 
-                                <a class="btn btn-danger btn-icon-split mx-2" data-toggle="modal" data-target="#deleteUserModal{{ user.username }}">
-                                    <span class="icon text">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </span>
-                                </a>
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteUserModal{{ user.username }}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                                <div class="modal-dialog  modal-dialog-centered" role="document" me>
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="">Delete this transportation?</h5>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
 
-                                <!-- Delete Modal -->
-                                <div class="modal fade" id="deleteUserModal{{ user.username }}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                                    <div class="modal-dialog  modal-dialog-centered" role="document" me>
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="">Delete this transportation?</h5>
-                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button>
-                                            </div>
+                                        <div class="modal-body">
+                                            <p>This transportation will be removed from database.</p>
+                                        </div>
 
-                                            <div class="modal-body">
-                                                <p>This transportation will be removed from database.</p>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                <form method="post">
-                                                    <a class="btn btn-danger" type="submit" href="{{ url_for('user.delete', id=user.username) }}">Delete</a>
-                                                </form>
-                                            </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                            <form method="post">
+                                                <a class="btn btn-danger" type="submit" href="{{ url_for('user.delete', id=user.username) }}">Delete</a>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Delete Modal -->
-                            </td>
+                            </div>
+                            <!-- End Delete Modal -->
                         </tr>
                         {% endfor %}
                     </tbody>
