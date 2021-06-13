@@ -62,6 +62,7 @@
                             {% endfor %}
                             
                             <td class="">
+                                {% if user.role != 'adm' %}
                                 <div class="d-flex flex-column justify-content-center">
                                     <a class="btn btn-warning btn-icon-split mx-2" href="{{ url_for('user.update', id=user.username) }}">
                                         <span class="text">
@@ -75,6 +76,7 @@
                                         </span>
                                     </a>
                                 </div>
+                                {% endif %}
                             </td>
 
                             <!-- Delete Modal -->
