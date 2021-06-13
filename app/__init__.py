@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, session, render_template, redirect, url_for
 from flask_login import LoginManager
-from app.Views import auth, dashboard, role_view, user_view, profile_view, transportation_view, post_transport_view, post_view, comment_view
+from app.Views import auth, role_view, user_view, profile_view, transportation_view, post_transport_view, post_view, comment_view
 from app.Controllers.user_controller import UserController
 from app.my_database import MyDatabase
 
@@ -18,7 +18,6 @@ MyDatabase.mysql.init_app(app)
 
 # Set blueprint
 app.register_blueprint(auth.blueprint)
-app.register_blueprint(dashboard.blueprint)
 app.register_blueprint(role_view.blueprint)
 app.register_blueprint(user_view.blueprint)
 app.register_blueprint(profile_view.blueprint)
