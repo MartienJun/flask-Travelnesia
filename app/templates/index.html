@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/parallax.css') }}"> -->
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- Google Font: Montserrat -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---------- Style.css ---------- */
+        .body {
+            font-family: 'Montserrat';
+        }
+
+
+        /* Text Color */
+        .my-text-primary {
+            color: #606C38;
+        }
+        /* End Text Color */
+
+        /* Button */
+        .my-btn-primary {
+            width: 7rem;
+            border: 2px solid #606C38 !important;
+            font-weight: 700 !important;
+            color: #fff !important;
+            background-color: #606C38 !important;
+        }
+
+        .my-btn-primary:hover {
+            border: 2px solid #8BA145 !important;
+            color: #fff !important;
+            background-color: #8BA145 !important;
+        }
+
+        .my-btn-secondary {
+            width: 7rem;
+            border: 2px solid #fff !important;
+            font-weight: 700 !important;
+            color: #606C38 !important;
+            background-color: #fff !important;
+        }
+
+        .my-btn-secondary:hover {
+            border: 2px solid #8BA145 !important;
+            color: #fff !important;
+            background-color: #8BA145 !important;
+        }
+
+        .my-btn-join {
+            width: 16rem;
+            border: 2px solid #606C38 !important;
+            font-weight: 700 !important;
+            color: #fff !important;
+            background-color: #606C38 !important;
+        }
+
+        .my-btn-join:hover {
+            border: 2px solid #8BA145 !important;
+            color: #fff !important;
+            background-color: #8BA145 !important;
+        }
+
+        /* Outlined Button */
+        .my-outlined-btn-primary {
+            width: 7rem;
+            border: 2px solid #908949 !important;
+            font-weight: 700 !important;
+            color: #fff !important;
+            background-color: transparent !important;
+        }
+
+        .my-outlined-btn-primary:hover {
+            border: 2px solid #fff !important;
+            color: #908949 !important;
+            background-color: #fff !important;
+        }
+
+        .my-outlined-btn-secondary {
+            width: 7rem;
+            border: 2px solid #fff !important;
+            font-weight: 700 !important;
+            color: #908949 !important;
+            background-color: transparent !important;
+        }
+
+        .my-outlined-btn-secondary:hover {
+            border: 2px solid #908949 !important;
+            color: #fff !important;
+            background-color: #908949 !important;
+        }
+        /* End Button */
+
+
+        /* Content */
+        .content-box {
+            height: 120vh;
+        }
+
+        .content-box-section-2 {
+            height: 120vh;
+            background-color: #020205;
+        }
+
+        .content-box-section-3 {
+            height: 240vh;
+            background-color: #020205;
+        }
+
+        .content-bg-white {
+            background-color: #fff;
+        }
+
+        .content-bg-black {
+            background-color: #020205;
+        }
+
+        .content-bg-section-2 {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url('{{ url_for('static', filename='img/beach.png') }}');
+        }
+
+        .content-bg-section-3 {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url('{{ url_for('static', filename='img/city.png') }}');
+        }
+
+        .content-header {
+            font-weight: 700;
+            font-size: 2.8rem;
+            color: #606C38;
+        }
+
+        .content-header-section-3 {
+            font-weight: 700;
+            font-size: 5rem;
+            color: #fff;
+        }
+
+        .content-text {
+            font-weight: 400;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .content-img {
+            width: 500px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0px 10px 20px rgba(2, 2, 5, 0.7);
+        }
+
+        .content-card {
+            width: 18rem;
+            height: 300px;
+        }
+        /* End of Content */
+
+        .icon {
+            width: 30px;
+            height: auto;
+            color: #fff;
+        }
+        /* ---------- End of Style.css ---------- */
+
+        /* ---------- Parallax.css ---------- */
+        .parallax-home {
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .parallax-bg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .parallax-bg-1 {
+            /* background-image: url('../images/background.png'); */
+            background-image: url('{{ url_for('static', filename='img/background.png') }}');
+        }
+
+        .parallax-bg-2 {
+            background-image: url('{{ url_for('static', filename='img/mountain-1.png') }}');
+        }
+
+        .parallax-bg-3 {
+            background-image: url('{{ url_for('static', filename='img/climber.png') }}');
+        }
+
+        .parallax-bg-4 {
+            top: 40%;
+            background-image: url('{{ url_for('static', filename='img/cloud.png') }}');
+        }
+
+        .parallax-title {
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 5.5vw;
+        }
+        /* ---------- End of Parallax.css ---------- */
+    </style>
+
+    <title>Travelnesia</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top px-5">
+        <div class="container-fluid">
+            <!-- navigation menu -->
+            <div class="col-4 d-flex align-items-center justify-content-start">
+                <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item me-4">
+                            <a class="nav-link fw-bold text-white" href="">Home</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fw-bold text-white" href="">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- logo -->
+            <div class="col-4 my-2 d-flex align-items-center justify-content-center text-center">
+                <a class="w-75" href="">
+                    <img class="w-75" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
+                </a>
+            </div>
+
+            <!-- sign in & sign up -->
+            <div class="col-4 d-flex align-items-center justify-content-end">
+                <a class="btn my-btn-secondary rounded-pill" href="">
+                    Sign In
+                </a>
+                <div class="mx-3"></div>
+                <a class="btn my-btn-primary rounded-pill" href="">
+                    Sign Up
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid p-0 parallax-home">
+        <div class="parallax-bg parallax-bg-1 rellax" data-rellax-speed="-10"></div>
+        <h1 class="parallax-title rellax" data-rellax-speed="-6">Start Your Journey Here</h1>
+        <div class="parallax-bg parallax-bg-2 rellax" data-rellax-speed="-8"></div>
+        <div class="parallax-bg parallax-bg-3 rellax" data-rellax-speed="-6"></div>
+        <div class="parallax-bg parallax-bg-4 rellax" data-rellax-speed="-4"></div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Content -->
+        <div class="row px-5 content-box content-bg-black">
+            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img class="content-img" src="{{ url_for('static', filename='img/pukpik-aB46yUmsMp0-unsplash.jpg') }}" alt="pukpik-aB46yUmsMp0-unsplash.jpg">
+            </div>
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+                <p class="content-header">Discover Unique Places</p>
+                <p class="content-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam iusto aperiam ratione fugiat quos nulla porro accusantium. Est, excepturi ullam aut velit id fuga odio harum natus. Sed, totam aliquid.</p>
+            </div>
+        </div>
+
+        <div class="row pt-5 px-5 content-box-section-2 content-bg-section-2">
+            <div class="col-12 col-md-4 ps-5 d-flex flex-column justify-content-center">
+                <p class="text-white content-header">Share Your Story</p>
+                <p class="content-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam iusto aperiam ratione fugiat quos nulla porro accusantium. Est, excepturi ullam aut velit id fuga odio harum natus. Sed, totam aliquid.</p>
+            </div>
+            <div class="col-12 col-md-8 d-flex align-items-center justify-content-center">
+                <div class="row px-5">
+                    <div class="col-6 d-flex align-items-start justify-content-end">
+                        <img class="w-75 h-auto rounded-3 shadow-lg" src="{{ url_for('static', filename='img/story-1.jpg') }}" alt="Photo by Michael Block from Pexels">
+                    </div>
+                    <div class="col-6 pt-5 d-flex align-items-center justify-content-end">
+                        <img class="w-75 h-auto rounded-3 shadow-lg" src="{{ url_for('static', filename='img/story-2.jpg') }}" alt="Photo by Amine M'Siouri from Pexels">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row px-5 content-box-section-3 content-bg-section-3">
+            <div class="col-12">
+                <div class="row content-box">
+                    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                        <img class="content-img" src="{{ url_for('static', filename='img/pexels-rachel-claire-4992673.jpg') }}" alt="pukpik-aB46yUmsMp0-unsplash.jpg">
+                    </div>
+                    <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+                        <p class="content-header m-0">Get The Information</p>
+                        <p class="content-header">You Need</p>
+                        <p class="content-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam iusto aperiam ratione fugiat quos nulla porro accusantium. Est, excepturi ullam aut velit id fuga odio harum natus. Sed, totam aliquid.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12">
+                <div class="row content-box">
+                    <div class="col-12 d-flex flex-column align-items-center justify-content-center">
+                        <p class="content-header-section-3 m-0">Life Is Short, Travel More</p>
+                        <div class="my-2"></div>
+                        <a class="btn my-btn-join rounded-pill" href="">
+                            Join Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+
+    <footer class="container-fluid content-bg-black">
+        <div class="row">
+            <div class="col-3 d-flex align-items-center justify-content-center text-white">
+                <span>Copyright &copy; <span class="my-text-primary">Travelnesia 2021</span></span>
+            </div>
+            <div class="col-6 d-flex align-items-center justify-content-center">
+                <img class="img-fluid h-50" src="{{ url_for('static', filename='img/icon.png') }}" alt="Icon">
+            </div>
+            <div class="col-3 d-flex align-items-center justify-content-center">
+                <a class="text-decoration-none text-white d-flex" href="https://www.instagram.com/martienjunaedi/" target="_blank">
+                    <img class="icon mx-3 my-0" src="{{ url_for('static', filename='img/instagram.svg') }}"><p class="m-0">@martienjunaedi</p>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Rellax JS -->
+    <script src="{{ url_for('static', filename='js/rellax.min.js') }}"></script>
+    <script>
+        var rellax = new Rellax('.rellax');
+    </script>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>    
+</body>
+</html>

@@ -1,5 +1,5 @@
 from app.Views.dashboard import dashboard
-from flask import Flask, Blueprint, session
+from flask import Flask, Blueprint, session, render_template
 from app.Views import dashboard, role_view, user_view, profile_view, transportation_view, post_transport_view, post_view, comment_view
 from app.my_database import MyDatabase
 
@@ -27,4 +27,4 @@ app.register_blueprint(comment_view.blueprint)
 @app.route('/')
 def index():
     session['admin'] = 'admin'
-    return "Ini index"
+    return render_template("index.html")
