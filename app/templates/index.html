@@ -236,7 +236,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item me-4">
-                            <a class="nav-link fw-bold text-white" href="">Home</a>
+                            <a class="nav-link fw-bold text-white" href="{{ url_for('index') }}">Home</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link fw-bold text-white" href="">About Us</a>
@@ -247,14 +247,14 @@
 
             <!-- logo -->
             <div class="col-4 my-2 d-flex align-items-center justify-content-center text-center">
-                <a class="w-75" href="">
+                <a class="w-75" href="{{ url_for('index') }}">
                     <img class="w-75" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
                 </a>
             </div>
 
             <!-- sign in & sign up -->
             <div class="col-4 d-flex align-items-center justify-content-end">
-                <a class="btn my-btn-secondary rounded-pill" href="">
+                <a class="btn my-btn-secondary rounded-pill" href="{{ url_for('auth.signin') }}">
                     Sign In
                 </a>
                 <div class="mx-3"></div>
@@ -306,7 +306,7 @@
             <div class="col-12">
                 <div class="row content-box">
                     <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                        <img class="content-img" src="{{ url_for('static', filename='img/pexels-rachel-claire-4992673.jpg') }}" alt="pukpik-aB46yUmsMp0-unsplash.jpg">
+                        <img class="content-img" src="{{ url_for('static', filename='img/pexels-rachel-claire-4992673.jpg') }}" alt="">
                     </div>
                     <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
                         <p class="content-header m-0">Get The Information</p>
