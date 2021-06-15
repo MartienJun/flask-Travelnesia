@@ -3,7 +3,6 @@ from flask.helpers import flash
 from flask_login import current_user, login_required
 from app.Models.post import Post
 from app.Controllers.post_controller import PostController
-from app.Controllers.post_transport_controller import Post_transportController
 from app.Controllers.transportation_controller import TransportationController
 from app.Controllers.user_controller import UserController
 
@@ -23,7 +22,7 @@ def view():
         flash("You must sign in as admin to use this feature")
         return redirect(url_for('auth.signin'))
     # Jika session admin ada, tampilkan halaman view
-    return render_template("admin/post/view_post.html", list_post=PostController.get_all(), list_user=UserController.get_all(), list_transport=TransportationController.get_all(), list_post_transport=Post_transportController.get_all())
+    return render_template("admin/post/view_post.html", list_post=PostController.get_all(), list_user=UserController.get_all(), list_transport=TransportationController.get_all())
 
 
 # Routing untuk halaman insert
@@ -36,7 +35,7 @@ def insert():
         return redirect(url_for('auth.signin'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
-        return render_template("admin/post/insert.html", list_user=UserController.get_all())
+        return render_template("admin/post/insert.html", list_user=UserController.get_all(), list_transport=TransportationController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     post_id = None
@@ -44,12 +43,13 @@ def insert():
     username = request.form['username']
     location = request.form['location']
     location_rating = request.form['location_rating']
+    transport = request.form['transport']
     vote = request.form['vote']
     budget = request.form['budget']
     content = request.form['content']
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
-    post = Post(post_id, title, username, location, location_rating, vote, budget, content)
+    post = Post(post_id, title, username, location, location_rating, transport, vote, budget, content)
     PostController.insert(post)
 
     # Redirect ke halaman view
@@ -66,7 +66,7 @@ def update(id):
         return redirect(url_for('auth.signin'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("admin/post/update.html", post=PostController.get_by_id(id), list_user=UserController.get_all())
+        return render_template("admin/post/update.html", post=PostController.get_by_id(id), list_user=UserController.get_all(), list_transport=TransportationController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     post_id = request.form['post_id']
@@ -74,12 +74,13 @@ def update(id):
     username = request.form['username']
     location = request.form['location']
     location_rating = request.form['location_rating']
+    transport = request.form['transport']
     vote = request.form['vote']
     budget = request.form['budget']
     content = request.form['content']
 
     # Update data tersebut ke dalam database melalui model
-    post = Post(post_id, title, username, location, location_rating, vote, budget, content)
+    post = Post(post_id, title, username, location, location_rating, transport, vote, budget, content)
     PostController.update(post)
 
     # Redirect kembali ke view

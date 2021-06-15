@@ -11,7 +11,6 @@
             <p class="h1 mb-4 font-weight-bold">Tabel user Kosong! Tambah user terlebih dahulu!</p>
         </div>
     {% else %}
-        
         <div class="row">
             {% if message %}
                 <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
@@ -62,6 +61,19 @@
                         <input class="form-control" name="budget" type="text" value="{{ post.budget }}" required>
                     </div>
                     
+                    <div class="form-group">
+                        <label for="">Transportation</label>
+                        <select name="transport" class="form-control" required>
+                            {% for transport in list_transport %}
+                                {% if transport.transport_id == post.transport %}
+                                    <option value="{{ transport.transport_id }}" selected>{{ transport.transport }}</option>
+                                {% else %}
+                                    <option value="{{ transport.transport_id }}">{{ transport.transport }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="">Vote</label>
                         <input class="form-control" name="vote" type="text" value="{{ post.vote }}" required>

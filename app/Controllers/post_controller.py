@@ -8,16 +8,16 @@ class PostController:
     @staticmethod
     def insert(post):
         MyDatabase.execute_and_commit(
-            "INSERT into post VALUES(%s, %s, %s, %s, %s, %s, %s, %s)",
-            [ post.post_id, post.title, post.username, post.location, post.location_rating, post.vote, post.budget, post.content ]
+            "INSERT into post VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            [ post.post_id, post.title, post.username, post.location, post.location_rating, post.transport ,post.vote, post.budget, post.content ]
         )
 
     # Fungsi update digunakan untuk men-update data ke Tabel post dalam database travelnesia
     @staticmethod
     def update(post):
         MyDatabase.execute_and_commit(
-            "UPDATE post SET title=%s, username=%s, location=%s, location_rating=%s, vote=%s, budget=%s, content=%s WHERE post_id=%s",
-            [ post.title, post.username, post.location, post.location_rating, post.vote, post.budget, post.content, post.post_id]
+            "UPDATE post SET title=%s, username=%s, location=%s, location_rating=%s, transport=%s, vote=%s, budget=%s, content=%s WHERE post_id=%s",
+            [ post.title, post.username, post.location, post.location_rating, post.transport, post.vote, post.budget, post.content, post.post_id]
         )
 
     # Fungsi delete digunakan untuk menghapus data dari Tabel post dalam database travelnesia berdasarkan post_id

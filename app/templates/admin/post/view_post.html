@@ -82,13 +82,9 @@
                         </div>
                         <div class="col-10 font-weight-bold">
                             <p>
-                                {% for post_transport in list_post_transport %}
-                                    {% if post.post_id == post_transport.post_id %}
-                                        {% for transport in list_transport %}
-                                            {% if post_transport.transport_id == transport.transport_id %}
-                                                {{ transport.transport }} |
-                                            {% endif %}
-                                        {% endfor %}
+                                {% for transport in list_transport %}
+                                    {% if transport.transport_id == post.transport %}
+                                        {{ transport.transport }}
                                     {% endif %}
                                 {% endfor %}
                             </p>
