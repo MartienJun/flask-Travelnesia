@@ -28,10 +28,55 @@ def signin():
             if current_user.role == 'adm':
                 return redirect(url_for('post.view'))
             else:
-                print(current_user)
                 return "Hello user"
 
     return render_template('auth/sign-in.html')
+
+
+@blueprint.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        name = request.form['name']
+        email = request.form['email']
+        telp = request.form['telp']
+        password = request.form['password']
+        error = None
+
+        profiles = ProfileController.get_all()
+
+        if not username:
+            error = 'Username cannot be empty'
+        elif not name:
+            error = 'Name cannot be empty'
+        elif not email:
+            error = 'Email cannot be empty'
+        elif not telp:
+            error = 'Phone number cannot be empty'
+        elif not password:
+            error = 'Password cannot be empty'
+        else:
+            for profile in profiles:
+                if profile.username == username:
+                    error = 'Username alreaddy exist'
+                elif profile.email == email:
+                    error = 'Email alreaddy exist'
+                elif profile.telp == telp:
+                    error = 'Phone number alreaddy exist'
+                    
+
+        if error is None:
+            user = User(username, 'usr', password)
+            profile = Profile(username, name, email, telp, 'default_profile.png')
+            UserController.insert(user)
+            ProfileController.insert(profile)
+
+            return redirect(url_for('auth.signin'))
+
+        flash(error)
+        
+    return render_template('auth/sign-up.html')
+
 
 
 @blueprint.route('/signout')
