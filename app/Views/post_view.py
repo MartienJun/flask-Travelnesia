@@ -1,9 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask.helpers import flash
 from flask_login import current_user, login_required
-from app.Controllers.post_controller import PostController
 from app.Models.post import Post
+from app.Controllers.post_controller import PostController
+from app.Controllers.post_transport_controller import Post_transportController
+from app.Controllers.transportation_controller import TransportationController
 from app.Controllers.user_controller import UserController
+
 
 
 # Insialisasi Blueprint dengan url_prefix post
@@ -20,7 +23,7 @@ def view():
         flash("You must sign in as admin to use this feature")
         return redirect(url_for('auth.signin'))
     # Jika session admin ada, tampilkan halaman view
-    return render_template("admin/post/view_post.html", list_post=PostController.get_all(), list_user=UserController.get_all())
+    return render_template("admin/post/view_post.html", list_post=PostController.get_all(), list_user=UserController.get_all(), list_transport=TransportationController.get_all(), list_post_transport=Post_transportController.get_all())
 
 
 # Routing untuk halaman insert

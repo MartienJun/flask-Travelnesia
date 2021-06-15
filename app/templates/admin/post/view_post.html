@@ -45,36 +45,53 @@
                     </div>
                     {% for user in list_user %}
                         {% if post.username == user.username %}
-                            <p class="h6">Posted by {{ user.username }}</p>
+                            <p class="h6">Posted by <b>{{ user.username }}</b></p>
                         {% endif %}
                     {% endfor %}
-                    <p class="h6">Vote {{ post.vote }}</p>
+                    <p class="h6"><span class="mr-2" style="color: #ff0a54;"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>{{ post.vote }}</p>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="row">
                         <!-- Location -->
-                        <div class="col-1">
+                        <div class="col-2">
                             <p>Location</p>
                         </div>
-                        <div class="col-11 font-weight-bold">
+                        <div class="col-10 font-weight-bold">
                             <p>{{ post.location }}</p>
                         </div>
                         <!-- Rating -->
-                        <div class="col-1">
-                            <p>Rating</p>
+                        <div class="col-2">
+                            <p>Location Rating</p>
                         </div>
-                        <div class="col-11 text-warning">
+                        <div class="col-10 text-warning">
                             {% for user in range(post.location_rating) %}
                                 <i class="fa fa-star" aria-hidden="true"></i>
                             {% endfor %}
                         </div>
                         <!-- Budget -->
-                        <div class="col-1">
-                            <p>Budget</p>
+                        <div class="col-2">
+                            <p>Budget Estimate</p>
                         </div>
-                        <div class="col-11 font-weight-bold">
+                        <div class="col-10 font-weight-bold">
                             <p>Rp {{ post.budget }},00</p>
+                        </div>
+                        <!-- Transport -->
+                        <div class="col-2">
+                            <p>Transportation</p>
+                        </div>
+                        <div class="col-10 font-weight-bold">
+                            <p>
+                                {% for post_transport in list_post_transport %}
+                                    {% if post.post_id == post_transport.post_id %}
+                                        {% for transport in list_transport %}
+                                            {% if post_transport.transport_id == transport.transport_id %}
+                                                {{ transport.transport }} |
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
                         </div>
                         <!-- Story -->
                         <div class="col-12">
