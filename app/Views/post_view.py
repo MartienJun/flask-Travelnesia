@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for
+from flask.helpers import flash
+from flask_login import current_user, login_required
 from app.Controllers.post_controller import PostController
 from app.Models.post import Post
 from app.Controllers.user_controller import UserController
@@ -11,26 +13,30 @@ blueprint = Blueprint("post", __name__, url_prefix="/admin/post")
 # Routing untuk ke halaman view
 @blueprint.route('/')
 @blueprint.route('/view')
+@login_required
 def view():
-    # Jika session admin tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session rolenya bukan admin, redirect kembali ke sign in
+    if current_user.role != 'adm':
+        flash("You must sign in as admin to use this feature")
+        return redirect(url_for('auth.signin'))
     # Jika session admin ada, tampilkan halaman view
-    return render_template("Views/post/view.html", list_post=PostController.get_all(), list_user=UserController.get_all())
+    return render_template("admin/post/view_post.html", list_post=PostController.get_all(), list_user=UserController.get_all())
 
 
 # Routing untuk halaman insert
 @blueprint.route('/insert', methods=['GET', 'POST'])
+@login_required
 def insert():
-    # Jika session admin tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session rolenya bukan admin, redirect kembali ke sign in
+    if current_user.role != 'adm':
+        flash("You must sign in as admin to use this feature")
+        return redirect(url_for('auth.signin'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
-        return render_template("Views/post/insert.html", list_user=UserController.get_all())
+        return render_template("admin/post/insert.html", list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
-    post_id = request.form['post_id']
+    post_id = None
     title = request.form['title']
     username = request.form['username']
     location = request.form['location']
@@ -38,11 +44,6 @@ def insert():
     vote = request.form['vote']
     budget = request.form['budget']
     content = request.form['content']
-
-    # Cek apakah post_id sudah ada dalam database
-    if PostController.get_by_id(post_id) is not None:
-        # jika iya, tampilkan error message
-        return render_template('Views/post/insert.html', message="post_id sudah pernah terdaftar!", list_user=UserController.get_all())
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     post = Post(post_id, title, username, location, location_rating, vote, budget, content)
@@ -54,13 +55,15 @@ def insert():
 
 # Routing untuk halaman update
 @blueprint.route('/update/<id>', methods=['GET', 'POST'])
+@login_required
 def update(id):
-    # Jika session admin tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session rolenya bukan admin, redirect kembali ke sign in
+    if current_user.role != 'adm':
+        flash("You must sign in as admin to use this feature")
+        return redirect(url_for('auth.signin'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("Views/post/update.html", post=PostController.get_by_id(id), list_user=UserController.get_all())
+        return render_template("admin/post/update.html", post=PostController.get_by_id(id), list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     post_id = request.form['post_id']
@@ -81,11 +84,13 @@ def update(id):
 
 
 # Routing untuk halaman delete
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete/<id>', methods=['POST', 'GET'])
+@login_required
 def delete(id):
-    # Jika session admin tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session rolenya bukan admin, redirect kembali ke sign in
+    if current_user.role != 'adm':
+        flash("You must sign in as admin to use this feature")
+        return redirect(url_for('auth.signin'))
 
     # Hapus data tersebut dari database
     PostController.delete(id)

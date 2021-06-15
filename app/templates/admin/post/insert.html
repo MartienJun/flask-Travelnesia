@@ -1,0 +1,81 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Create Post{% endblock %}
+
+{% block nav_post %}active{% endblock nav_post %}
+
+{% block content %}
+<div class="container-fluid">
+    {% if list_user | length < 1 %}
+        <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
+            <p class="h1 mb-4 font-weight-bold">Tabel user Kosong! Tambah user terlebih dahulu!</p>
+        </div>
+    {% else %}
+        
+        <div class="row">
+            {% if message %}
+            <div class="col-12">
+                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+            <div class="col-3"></div>
+            <div class="col-6 align-self-center pt-2 pb-5 px-5">
+                <div class="d-sm-flex align-items-center justify-content-center mb-5">
+                    <h1 class="h3 mb-0 font-weight-bold text-gray-800">Create Post</h1>
+                </div>
+                <form class="" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="">Title</label>
+                        <input class="form-control" name="title" type="text" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="">User</label>
+                        <select name="username" class="form-control" required>
+                            <option value="">...</option>
+                            {% for user in list_user %}
+                                <option value="{{ user.username }}">{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Location</label>
+                        <input class="form-control" name="location" type="text" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Location Rating</label>
+                        <input class="form-control" name="location_rating" type="text" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Budget</label>
+                        <input class="form-control" name="budget" type="text" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="">Vote</label>
+                        <input class="form-control" name="vote" type="text" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Story</label>
+                        <textarea class="form-control" name="content" style="height: 250px"></textarea>
+                    </div>
+
+                    <button type="submit" value="create user" class="btn btn-success btn-user btn-block mt-5">
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

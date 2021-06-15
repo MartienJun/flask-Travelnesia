@@ -1,0 +1,91 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Transportation{% endblock %}
+
+{% block nav_transport %}active{% endblock nav_transport %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Transport</h1>
+        <a class="btn btn-success btn-icon-split" href="{{ url_for('transportation.insert') }}">
+            <span class="icon text-white-50"><i class="fa fa-plus" aria-hidden="true"></i></span>
+            <span class="text">Add Transport</span>
+        </a>
+    </div>
+
+    {% if list_transportation | length < 1 %}
+    <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
+        <p class="h1 mb-4 font-weight-bold">No Transportation Added</p>
+    </div>
+    {% else %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-success">Transportation List</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered post" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="text-dark">
+                        <tr>
+                            <th class="text-center">Transport ID</th>
+                            <th class="text-center">Transportation</th>
+                            <th class="text-center">Type</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transportation in list_transportation %}
+                        <tr>
+                            <td class="text-center">{{ transportation.transport_id }}</td>
+                            <td class="text-center">{{ transportation.transport }}</td>
+                            <td class="text-center">{{ transportation.type }}</td>
+                            <td class="d-flex align-items-center justify-content-center">
+                                <a class="btn btn-warning btn-icon-split mx-2" href="{{ url_for('transportation.update', id=transportation.transport_id) }}">
+                                    <span class="text">
+                                        <i class="fa fa-wrench" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+
+                                <a class="btn btn-danger btn-icon-split mx-2" data-toggle="modal" data-target="#deleteTransportModal{{ transportation.transport_id }}">
+                                    <span class="icon text">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+
+                                <!-- Delete Modal -->
+                                <div class="modal fade" id="deleteTransportModal{{ transportation.transport_id }}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog-centered" role="document" me>
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="">Delete this transportation?</h5>
+                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <p>This transportation will be removed from database.</p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                <form method="post">
+                                                    <a class="btn btn-danger" type="submit" href="{{ url_for('transportation.delete', id=transportation.transport_id) }}">Delete</a>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Delete Modal -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
