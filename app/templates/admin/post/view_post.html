@@ -29,7 +29,7 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-column justify-content-center">
                     <div class="mb-2 d-flex flex-row align-items-center justify-content-between">
-                        <a class="" href="">
+                        <a class="" href="{{ url_for('post.detail', id=post.post_id) }}">
                             <p class="h4 m-0 font-weight-bold text-success" id="title">{{ post.title }}</p>
                         </a>
                         <div class="dropdown no-arrow">

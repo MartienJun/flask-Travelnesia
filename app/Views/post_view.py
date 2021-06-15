@@ -5,6 +5,7 @@ from app.Models.post import Post
 from app.Controllers.post_controller import PostController
 from app.Controllers.transportation_controller import TransportationController
 from app.Controllers.user_controller import UserController
+from app.Controllers.comment_controller import CommentController
 
 
 
@@ -101,3 +102,19 @@ def delete(id):
 
     # Redirect kembali ke View
     return redirect(url_for('post.view'))
+
+
+# Routing untuk halaman post detail
+@blueprint.route('/detail/<id>', methods=['POST', 'GET'])
+@login_required
+def detail(id):
+    if current_user.role != 'adm':
+        flash("You must sign in as admin to use this feature")
+        return redirect(url_for('auth.signin'))
+
+    return render_template(
+        "admin/post/post.html",
+        post=PostController.get_by_id(id),
+        list_transport=TransportationController.get_all(),
+        list_comment=CommentController.get_all()
+    )
