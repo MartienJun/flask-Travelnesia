@@ -28,7 +28,7 @@ def signin():
             if current_user.role == 'adm':
                 return redirect(url_for('post.view'))
             else:
-                return "Hello user"
+                return redirect(url_for('user_post.view'))
 
     return render_template('auth/sign-in.html')
 

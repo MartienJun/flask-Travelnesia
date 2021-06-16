@@ -23,7 +23,7 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('post.view') }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('user_post.view') }}">
                 <div class="sidebar-brand-icon">
                     <img class="img-fluid" src="{{ url_for('static', filename='img/icon.png') }}" alt="">
                 </div>
@@ -31,28 +31,21 @@
             </a>
 
             <li class="nav-item {% block nav_post %}{% endblock nav_post %} my-2">
-                <a class="nav-link text-center" href="{{ url_for('post.view') }}">
+                <a class="nav-link text-center" href="{{ url_for('user_post.view') }}">
                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
                     <span>Post</span>
                 </a>
             </li>
 
             <li class="nav-item {% block nav_transport %}{% endblock nav_transport %} my-2">
-                <a class="nav-link text-center" href="{{ url_for('transportation.view') }}">
+                <a class="nav-link text-center" href="">
                     <i class="fa fa-car" aria-hidden="true"></i>
-                    <span>Transport</span>
-                </a>
-            </li>
-
-            <li class="nav-item {% block nav_user %}{% endblock nav_user %} my-2">
-                <a class="nav-link text-center" href="{{ url_for('user.view') }}">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    <span>User</span>
+                    <span>Explore</span>
                 </a>
             </li>
 
             <li class="nav-item {% block nav_profile %}{% endblock nav_profile %} my-2">
-                <a class="nav-link text-center" href="{{ url_for('profile.view') }}">
+                <a class="nav-link text-center" href="">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <span>Profile</span>
                 </a>
