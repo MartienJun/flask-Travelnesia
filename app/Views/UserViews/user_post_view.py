@@ -36,7 +36,6 @@ def insert():
     if request.method == 'GET':
         return render_template(
             "user/post/insert.html",
-            list_user=UserController.get_all(),
             list_transport=TransportationController.get_all()
         )
 
@@ -75,19 +74,18 @@ def update(id):
 
     if request.method == 'GET':
         return render_template(
-            "admin/post/update.html",
+            "user/post/update.html",
             post=PostController.get_by_id(id),
-            list_user=UserController.get_all(),
             list_transport=TransportationController.get_all()
         )
 
-    post_id = request.form['post_id']
+    post_id = PostController.get_by_id(id).post_id
     title = request.form['title']
-    username = request.form['username']
+    username = PostController.get_by_id(id).username
     location = request.form['location']
     location_rating = request.form['location_rating']
     transport = request.form['transport']
-    vote = request.form['vote']
+    vote = PostController.get_by_id(id).vote
     budget = request.form['budget']
     content = request.form['content']
 
@@ -130,6 +128,5 @@ def detail(id):
     return render_template(
         "user/post/post.html",
         post=PostController.get_by_id(id),
-        list_transport=TransportationController.get_all(),
         list_comment=CommentController.get_all()
     )
