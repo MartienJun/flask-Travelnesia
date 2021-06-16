@@ -117,7 +117,6 @@ def delete(id):
     return redirect(url_for('user_post.view'))
 
 
-# Routing untuk halaman post detail
 @blueprint.route('/detail/<id>', methods=['POST', 'GET'])
 @login_required
 def detail(id):
@@ -129,4 +128,17 @@ def detail(id):
         "user/post/post.html",
         post=PostController.get_by_id(id),
         list_comment=CommentController.get_all()
+    )
+
+
+@blueprint.route('/explore', methods=['POST', 'GET'])
+@login_required
+def explore():
+    if current_user.role != 'usr':
+        flash("You must sign in to use this feature")
+        return redirect(url_for('auth.signin'))
+
+    return render_template(
+        "user/post/explore.html",
+        list_post=PostController.get_all()
     )

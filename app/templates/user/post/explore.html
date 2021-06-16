@@ -1,0 +1,117 @@
+{% extends 'user/base.html' %}
+
+{% block title %}Explore{% endblock %}
+
+{% block nav_explore %}active{% endblock nav_explore %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Post</h1>
+        <form class="form-inline" action="">
+            <input class="form-control mr-sm-2" id="searchPost" type="text" placeholder="Search Title">
+        </form>
+    </div>
+
+    {% if list_post | length < 1 %}
+        <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
+            <p class="h1 mb-4 font-weight-bold">No Post Created</p>
+        </div>
+    {% else %}
+        <div class="row" id="myPosts">
+            {% for post in list_post %}
+                {% if post.username != current_user.username %}
+                    <div class="col-12 myPost">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="card-header py-3 d-flex flex-column justify-content-center">
+                                <div class="mb-2 d-flex flex-row align-items-center justify-content-between">
+                                    <a class="" href="{{ url_for('user_post.detail', id=post.post_id) }}">
+                                        <p class="h4 m-0 font-weight-bold text-success" id="title">{{ post.title }}</p>
+                                    </a>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Edit :</div>
+                                            <a class="dropdown-item" href="{{ url_for('user_post.update', id=post.post_id) }}">Update</a>
+                                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#deletePostModal{{ post.post_id }}">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="h6">Posted by <b>{{ post.username }}</b></p>
+                                <p class="h6"><span class="mr-2" style="color: #ff0a54;"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>{{ post.vote }}</p>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <!-- Location -->
+                                    <div class="col-2">
+                                        <p>Location</p>
+                                    </div>
+                                    <div class="col-10 font-weight-bold">
+                                        <p>{{ post.location }}</p>
+                                    </div>
+                                    <!-- Rating -->
+                                    <div class="col-2">
+                                        <p>Location Rating</p>
+                                    </div>
+                                    <div class="col-10 text-warning">
+                                        {% for star in range(post.location_rating) %}
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        {% endfor %}
+                                    </div>
+                                    <!-- Budget -->
+                                    <div class="col-2">
+                                        <p>Budget Estimate</p>
+                                    </div>
+                                    <div class="col-10 font-weight-bold">
+                                        <p>Rp {{ post.budget }},00</p>
+                                    </div>
+                                    <!-- Transport -->
+                                    <div class="col-2">
+                                        <p>Transportation</p>
+                                    </div>
+                                    <div class="col-10 font-weight-bold">
+                                        <p>
+                                            {% for transport in list_transport %}
+                                                {% if transport.transport_id == post.transport %}
+                                                    {{ transport.transport }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                    <!-- Story -->
+                                    <div class="col-12">
+                                        <p class="m-0 text-wrap">{{ post.content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="deletePostModal{{ post.post_id }}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document" me>
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <p class="h2 text-center mb-4">Delete this post?</p>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                        <div class="mx-2"></div>
+                                        <form method="post">
+                                            <a class="btn btn-danger" type="submit" href="{{ url_for('user_post.delete', id=post.post_id) }}">Delete</a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Delete Modal -->
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
