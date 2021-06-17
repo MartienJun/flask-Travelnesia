@@ -1,3 +1,4 @@
+from os.path import join, dirname, realpath
 from flask import Flask, render_template, redirect, url_for
 from flask_login import LoginManager, current_user
 from flask_login.utils import login_user
@@ -17,6 +18,15 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_DB'] = 'travelnesia'
 MyDatabase.mysql.init_app(app)
 
+
+
+# Set direcotry upload
+app.config['UPLOAD_FILE'] = join(dirname(realpath(__file__)), 'static/img') #os.path.realpath('.') + '/static/uploads'
+file_path = app.config['UPLOAD_FILE']
+app.config['ALLOWED_IMAGE_EXTENSION'] = ['JPEG', 'JPG', 'PNG']
+file_ext = app.config['ALLOWED_IMAGE_EXTENSION']
+app.config['MAX_IMAGE_SIZE'] = 2 * 1024 * 1024
+file_size = app.config['MAX_IMAGE_SIZE']
 
 # Set blueprint admin
 app.register_blueprint(auth.blueprint)
@@ -53,3 +63,17 @@ def index():
         return redirect(url_for('user_post.view'))
 
     return render_template("index.html")
+
+
+def allowed_image(filename):
+    if not '.' in filename:
+        return False
+    
+    ext = filename.rsplit('.', 1)[1]
+
+    if ext.upper() in file_ext:
+        return True
+    else:
+        return False
+
+

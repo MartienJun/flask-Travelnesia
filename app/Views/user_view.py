@@ -1,3 +1,5 @@
+import os
+import app
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask.helpers import flash
 from flask_login import current_user, login_required
@@ -55,12 +57,20 @@ def insert():
     # Jika profile picture tidak diisi
     if p_pict == "":
         p_pict = "default_profile.png"
+    
+    # Jika ekstensi file sesuai
+    if app.allowed_image(p_pict) is True:
+        # Save kedalam folder
+        profile_pict.save(os.path.join(app.file_path, p_pict))
+    else:
+        return render_template('admin/user/insert.html', message="Ekstensi file tidak sesuai! Hanya bisa menampung file JPG, JPEG, dan PNG", list_role=RoleController.get_all())
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     user = User(username, role, password)
     profile = Profile(username, name, email, telp, p_pict)
     UserController.insert(user)
     ProfileController.insert(profile)
+
 
     # Redirect ke halaman view
     return redirect(url_for('user.view'))
@@ -91,6 +101,17 @@ def update(id):
     # Jika profile picture tidak diisi
     if p_pict == "":
         p_pict = ProfileController.get_by_id(id).profile_pict
+
+    # Jika ekstensi file sesuai
+    if app.allowed_image(p_pict) is True:
+        # Jika nama file != file default profile pict
+        if p_pict != 'default_profile.png':
+            # Hapus file
+            os.remove(os.path.join(app.file_path, ProfileController.get_by_id(id).profile_pict))
+
+        profile_pict.save(os.path.join(app.file_path, p_pict))
+    else:
+        return render_template('admin/user/insert.html', message="Ekstensi file tidak sesuai! Hanya bisa menampung file JPG, JPEG, dan PNG", list_role=RoleController.get_all())
     
     # Update data tersebut ke dalam database melalui model
     user = User(username, role, password)
@@ -111,7 +132,15 @@ def delete(id):
         flash("You must sign in as admin to use this feature")
         return redirect(url_for('auth.signin'))
     # Hapus data tersebut dari database
+    
+    # Jika nama file != file default profile pict
+    if ProfileController.get_by_id(id).profile_pict != 'default_profile.png':
+        # Hapus file
+        os.remove(os.path.join(app.file_path, ProfileController.get_by_id(id).profile_pict))
+
     UserController.delete(id)
+
+
 
     # Redirect kembali ke View
     return redirect(url_for('user.view'))
