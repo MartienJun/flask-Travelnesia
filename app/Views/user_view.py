@@ -47,7 +47,6 @@ def insert():
     role = request.form['role']
     password = request.form['password']
     profile_pict = request.files['profile_pict']
-    p_pict = profile_pict.filename
 
     # Cek apakah username sudah ada dalam database
     if UserController.get_by_id(username) is not None:
@@ -55,19 +54,20 @@ def insert():
         return render_template('admin/user/insert.html', message="username sudah pernah terdaftar!", list_role=RoleController.get_all())
 
     # Jika profile picture tidak diisi
-    if p_pict == "":
-        p_pict = "default_profile.png"
-    
-    # Jika ekstensi file sesuai
-    if app.allowed_image(p_pict) is True:
-        # Save kedalam folder
-        profile_pict.save(os.path.join(app.file_path, p_pict))
+    if profile_pict.filename == "":
+        profile_pict.filename = "default_profile.png"
+    # Jika diisi
     else:
-        return render_template('admin/user/insert.html', message="Ekstensi file tidak sesuai! Hanya bisa menampung file JPG, JPEG, dan PNG", list_role=RoleController.get_all())
+        # Jika ekstensi file sesuai
+        if app.allowed_image(profile_pict.filename) is True:
+            # Save kedalam folder
+            profile_pict.save(os.path.join(app.file_path, profile_pict.filename))
+        else:
+            return render_template('admin/user/insert.html', message="Ekstensi file tidak sesuai! Hanya bisa menampung file JPG, JPEG, dan PNG", list_role=RoleController.get_all())
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     user = User(username, role, password)
-    profile = Profile(username, name, email, telp, p_pict)
+    profile = Profile(username, name, email, telp, profile_pict.filename)
     UserController.insert(user)
     ProfileController.insert(profile)
 
@@ -96,26 +96,28 @@ def update(id):
     role = request.form['role']
     password = request.form['password']
     profile_pict = request.files['profile_pict']
-    p_pict = profile_pict.filename
-
-    # Jika profile picture tidak diisi
-    if p_pict == "":
-        p_pict = ProfileController.get_by_id(id).profile_pict
-
-    # Jika ekstensi file sesuai
-    if app.allowed_image(p_pict) is True:
-        # Jika nama file != file default profile pict
-        if p_pict != 'default_profile.png':
-            # Hapus file
-            os.remove(os.path.join(app.file_path, ProfileController.get_by_id(id).profile_pict))
-
-        profile_pict.save(os.path.join(app.file_path, p_pict))
-    else:
-        return render_template('admin/user/insert.html', message="Ekstensi file tidak sesuai! Hanya bisa menampung file JPG, JPEG, dan PNG", list_role=RoleController.get_all())
     
+    # Jika profile picture tidak diisi
+    if profile_pict.filename == "":
+        if ProfileController.get_by_id(id).profile_pict != "default_profile.png":
+                # Hapus file
+                os.remove(os.path.join(app.file_path, ProfileController.get_by_id(id).profile_pict))
+                
+        profile_pict.filename = "default_profile.png"
+    else:
+        if app.allowed_image(profile_pict.filename) is True:
+            # Jika nama file != file default profile pict
+            if ProfileController.get_by_id(id).profile_pict != "default_profile.png":
+                # Hapus file
+                os.remove(os.path.join(app.file_path, ProfileController.get_by_id(id).profile_pict))
+            
+            profile_pict.save(os.path.join(app.file_path, profile_pict.filename))
+        else:
+            return render_template('admin/user/insert.html', message="Ekstensi file tidak sesuai! Hanya bisa menampung file JPG, JPEG, dan PNG", list_role=RoleController.get_all())
+        
     # Update data tersebut ke dalam database melalui model
     user = User(username, role, password)
-    profile = Profile(username, name, email, telp, p_pict)
+    profile = Profile(username, name, email, telp, profile_pict.filename)
     UserController.update(user)
     ProfileController.update(profile)
 
@@ -134,13 +136,11 @@ def delete(id):
     # Hapus data tersebut dari database
     
     # Jika nama file != file default profile pict
-    if ProfileController.get_by_id(id).profile_pict != 'default_profile.png':
+    if ProfileController.get_by_id(id).profile_pict != "default_profile.png":
         # Hapus file
         os.remove(os.path.join(app.file_path, ProfileController.get_by_id(id).profile_pict))
 
     UserController.delete(id)
-
-
 
     # Redirect kembali ke View
     return redirect(url_for('user.view'))

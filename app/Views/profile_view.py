@@ -1,3 +1,5 @@
+import os
+import app
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask.helpers import flash
 from flask_login import current_user, login_required
@@ -45,15 +47,28 @@ def update(id):
     role = request.form['role']
     password = request.form['password']
     profile_pict = request.files['profile_pict']
-    p_pict = profile_pict.filename
 
     # Jika profile picture tidak diisi
-    if p_pict == "":
-        p_pict = ProfileController.get_by_id(id).profile_pict
+    if profile_pict.filename == "":
+        if ProfileController.get_by_id(id).profile_pict != "default_profile.png":
+                # Hapus file
+                os.remove(os.path.join(app.file_path, ProfileController.get_by_id(id).profile_pict))
+                
+        profile_pict.filename = "default_profile.png"
+    else:
+        if app.allowed_image(profile_pict.filename) is True:
+            # Jika nama file != file default profile pict
+            if ProfileController.get_by_id(id).profile_pict != "default_profile.png":
+                # Hapus file
+                os.remove(os.path.join(app.file_path, ProfileController.get_by_id(id).profile_pict))
+            
+            profile_pict.save(os.path.join(app.file_path, profile_pict.filename))
+        else:
+            return render_template('admin/user/insert.html', message="Ekstensi file tidak sesuai! Hanya bisa menampung file JPG, JPEG, dan PNG", list_role=RoleController.get_all())
     
     # Update data tersebut ke dalam database melalui model
     user = User(username, role, password)
-    profile = Profile(username, name, email, telp, p_pict)
+    profile = Profile(username, name, email, telp, profile_pict.filename)
     UserController.update(user)
     ProfileController.update(profile)
 
